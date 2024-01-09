@@ -1,0 +1,25 @@
+.products-container {
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  border-bottom: 1px solid lightgray; /* Line separator at the bottom of each row */
+  border-top: 1px solid lightgray; /* Line separator at the bottom of each row */
+}
+
+.product-item {
+  border-radius: 6px;
+  background-color: yellowgreen;
+  padding: 0px;
+  margin-left:6px;
+}
+
+.product-head {
+  border-radius: 6px;
+  background-color: white;
+  color:navy;
+  padding: 0px;
+  margin-left:6px;
+  font-weight: bolder;
+  text-decoration: underline;
+}

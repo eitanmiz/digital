@@ -1,0 +1,92 @@
+<div>
+  <div>
+    <mat-form-field>
+      <mat-label>Free search</mat-label>
+      <input matInput [(ngModel)]='filterData.nameLike' (change)='resetButtons()'>
+      <mat-hint>Search in name</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <mat-select multiple [(ngModel)]='filterData.cities' (selectionChange)="resetButtons()">
+        <mat-option *ngFor="let city of cities | keyvalue" [value]="city.key">{{city.value}}</mat-option>
+      </mat-select>
+      <mat-hint>check cities for </mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Item type</mat-label>
+      <mat-select [(ngModel)]='filterData.productType' (selectionChange)="resetButtons()">
+        <mat-option *ngFor="let productType of ProductTypeNames | keyvalue" [value]="productType.key">{{productType.value}}</mat-option>
+      </mat-select>
+      <mat-hint>choose item type</mat-hint>
+    </mat-form-field>    
+    <mat-form-field>
+      <mat-label>From date</mat-label>
+      <input matInput [matDatepicker]="picker_from" [(ngModel)]='filterData.fromDate' (dateChange)="resetButtons()">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker_from"></mat-datepicker-toggle>
+      <mat-datepicker #picker_from></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>To date</mat-label>
+      <input matInput [matDatepicker]="picker_to" [(ngModel)]='filterData.toDate' (dateChange)="resetButtons()">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker_to"></mat-datepicker-toggle>
+      <mat-datepicker #picker_to></mat-datepicker>
+    </mat-form-field>
+    <button mat-fab extended matTooltip='search' (click)='searchFilter()'>
+        <mat-icon>search</mat-icon>
+    </button>
+    <button mat-fab extended matTooltip='clear search' (click)='clearFilter()'>
+      <mat-icon>clear</mat-icon>
+  </button>
+</div>
+  <hr>
+  <button mat-fab extended matTooltip='previous' (click)='prevData()' [disabled]="filterData.pageNumber==1">
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+  <button mat-fab extended matTooltip='next' (click)='nextData()' [disabled]="filterData.pageNumber * 5 >= filterSize">
+    <mat-icon>arrow_right</mat-icon>
+  </button>
+  <hr>
+  <li class='products-container'>
+    <span class='product-head'>
+      ID
+    </span>
+    <span class='product-head'>
+      Name
+    </span>
+    <span class='product-head'>
+      Type      
+    </span>
+    <span class='product-head'>
+      Date     
+    </span>
+    <span class='product-head'>
+      Price     
+    </span>
+    <span class='product-head'>
+      City Man.     
+    </span>
+  </li>
+  <li class='products-container' *ngFor="let product of products$ | async">
+    <!-- <div class='grid-row'> -->
+    <span class='product-item'>
+      {{product.id}}
+    </span>
+    <span class='product-item'>
+      {{product.name}}
+    </span>
+    <span class='product-item'>
+      {{ProductTypeE[product.productType]}}
+    </span>
+    <span class='product-item'>
+      {{product.createdDate | date : "dd/MM/yyyy" }}
+    </span>
+    <span class='product-item'>
+      {{product.price.toFixed(2)}}
+    </span>
+    <span class='product-item'>
+      {{cities[product.manufacturerCityId]}}
+    </span>
+  </li>
+</div>
